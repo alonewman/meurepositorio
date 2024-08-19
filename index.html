@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio de Economia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Evita a rolagem horizontal */
+            
+        }
+
+        header {
+            background: linear-gradient(to right, #f1c40f, #f39c12); /* Gradiente de amarelo */
+            padding: 20px;
+            text-align: center;
+            z-index: 1000;
+            position: relative;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #000000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #0a0a0a;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: top 0.3s, transform 0.3s;
+            transform: translateY(-100%); /* Inicialmente escondido */
+        }
+
+        nav.visible {
+            transform: translateY(0); /* Mostra o menu quando a classe `visible` é adicionada */
+        }
+
+        nav a {
+            color: #FFD700;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+        }
+
+        .menu-hamburguer {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px; /* Botão hambúrguer no lado esquerdo */
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-hamburguer div {
+            width: 30px;
+            height: 3px;
+            background-color: #000000;
+            margin: 6px 0;
+            transition: 0.3s;
+        }
+
+        .nav-open .menu-hamburguer div:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .nav-open .menu-hamburguer div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-open .menu-hamburguer div:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        @media screen and (max-width: 768px) {
+            nav {
+                display: flex;
+                flex-direction: column;
+                top: 60px; /* Ajusta a altura para não cobrir o cabeçalho */
+                background-color: #0a0a0a;
+                position: fixed;
+                width: 100%;
+                transform: translateY(0); /* Mostra o menu quando o botão hambúrguer é clicado */
+            }
+
+            nav a {
+                margin: 10px 0;
+            }
+
+            .menu-hamburguer {
+                display: block;
+            }
+        }
+
+        section {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 80px; /* Ajusta o espaçamento para não sobrepor o cabeçalho e menu fixo */
+        }
+
+        section h2 {
+            color: #FFD700;
+            border-bottom: 2px solid #FFD700;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .content-box {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .content-box h3 {
+            color: #FFD700;
+            margin-top: 0;
+        }
+
+        .content-box p {
+            color: #cccccc;
+        }
+
+        footer {
+            background-color: #FFD700;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            color: #000000;
+        }
+
+        .file-link {
+            display: inline-block;
+            background-color: #FFD700;
+            color: #000000;
+            padding: 10px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .file-link:hover {
+            background-color: #000000;
+            color: #FFD700;
+        }
+
+        .note-item {
+            background-color: #333333;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .delete-button {
+            background-color: #FF6347;
+            color: #ffffff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: #FF4500;
+        }
+        /* Botão Voltar ao Topo */
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #f1c40f; /* Amarelo */
+    color: #000000; /* Preto */
+    padding: 10px 20px;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+    display: none; /* Ocultar por padrão */
+    font-size: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Garantir que o botão fique acima de outros elementos */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.back-to-top:hover {
+    background-color: #e0b90f; /* Amarelo mais escuro ao passar o mouse */
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- Menu Hambúrguer -->
+    <div class="menu-hamburguer" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <!-- Botão Voltar ao Topo -->
+<div class="back-to-top" id="backToTop">
+    &#8679; <!-- Ícone de seta para cima -->
+</div>
+
+
+    <!-- Menu de Navegação -->
+    <nav id="mainNav">
+        <a href="#slides">Slides</a>
+        <a href="#provas">Provas</a>
+        <a href="#anotacoes">Anotações</a>
+        <a href="#links">Links Úteis</a>
+        <a href="#sobre">Sobre Mim</a>
+    </nav>
+
+    <header>
+        <h1>Portfólio de Economia</h1>
+    </header>
+
+    <section id="slides">
+        <h2>Slides de Estudos</h2>
+    
+        <!-- Seção para Macroeconomia II -->
+        <div class="content-box">
+            <h3>Macroeconomia II</h3>
+            <div class="content-box">
+                <h4>Slide 1: Crescimento Econômico</h4>
+                <p>Análise do crescimento econômico e suas implicações.</p>
+                <a href="slides/macroeconomia-ii/crescimento-economico.pdf" class="file-link" download>Baixar Slide</a>
+            </div>
+            <div class="content-box">
+                <h4>Slide 2: Políticas Monetárias</h4>
+                <p>Estudo das políticas monetárias e seus efeitos.</p>
+                <a href="slides/macroeconomia-ii/politicas-monetarias.pdf" class="file-link" download>Baixar Slide</a>
+            </div>
+        </div>
+    
+        <!-- Seção para Microeconomia II -->
+        <div class="content-box">
+            <h3>Microeconomia II</h3>
+            <div class="content-box">
+                <h4>Slide 1: Teoria dos Jogos</h4>
+                <p>Introdução à teoria dos jogos e suas aplicações.</p>
+                <a href="slides/microeconomia-ii/teoria-dos-jogos.pdf" class="file-link" download>Baixar Slide</a>
+            </div>
+            <div class="content-box">
+                <h4>Slide 2: Estruturas de Mercado</h4>
+                <p>Análise das diferentes estruturas de mercado.</p>
+                <a href="slides/microeconomia-ii/estruturas-de-mercado.pdf" class="file-link" download>Baixar Slide</a>
+            </div>
+        </div>
+    </section>
+    
+
+    <section id="provas">
+        <h2>Provas e Exercícios</h2>
+        <div class="content-box">
+            <h3>Prova 1: Microeconomia</h3>
+            <p>Prova de Microeconomia do 1º semestre.</p>
+            <a href="provas/microeconomia-prova.pdf" class="file-link" download>Baixar Prova</a>
+        </div>
+        <div class="content-box">
+            <h3>Prova 2: Macroeconomia</h3>
+            <p>Prova de Macroeconomia do 2º semestre.</p>
+            <a href="provas/macroeconomia-prova.pdf" class="file-link" download>Baixar Prova</a>
+        </div>
+        <!-- Adicione mais provas conforme necessário -->
+    </section>
+
+    <section id="anotacoes">
+        <h2>Anotações</h2>
+        <div class="content-box">
+            <h3>Adicionar Anotação</h3>
+            <input type="text" id="noteInput" placeholder="Digite sua anotação aqui">
+            <button onclick="saveNote()">Salvar Anotação</button>
+        </div>
+        <div id="notesContainer"></div>
+    </section>
+
+    <section id="links">
+        <h2>Links Úteis</h2>
+        <div class="content-box">
+            <h3>Links de Estudo</h3>
+            <p><a href="https://estudante.ibmec.br" target="_blank" class="file-link">Portal do Estudante IBMEC</a></p>
+            <p><a href="https://sia.ibmec.br/sianet/logon" target="_blank" class="file-link">SIA - IBMEC</a></p>
+        </div>
+    </section>
+
+    <section id="sobre">
+        <h2>Sobre Mim</h2>
+        <div class="content-box">
+            <h3>Quem Sou Eu</h3>
+            <p>Sou estudante de economia apaixonado por entender e analisar as dinâmicas do mercado. Este portfólio é uma coleção de meus estudos e resultados ao longo do curso.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Portfólio de Economia</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.body.classList.toggle('nav-open');
+        }
+        
+        function saveNote() {
+            const noteInput = document.getElementById('noteInput').value;
+            if (noteInput === '') return;
+
+            let notes = localStorage.getItem('notes');
+            notes = notes ? JSON.parse(notes) : [];
+            notes.push(noteInput);
+            localStorage.setItem('notes', JSON.stringify(notes));
+
+            document.getElementById('noteInput').value = '';
+            displayNotes();
+        }
+
+        function deleteNote(index) {
+            let notes = localStorage.getItem('notes');
+            notes = notes ? JSON.parse(notes) : [];
+            notes.splice(index, 1);
+            localStorage.setItem('notes', JSON.stringify(notes));
+            displayNotes();
+        }
+
+        function displayNotes() {
+            const notesContainer = document.getElementById('notesContainer');
+            let notes = localStorage.getItem('notes');
+            notes = notes ? JSON.parse(notes) : [];
+            notesContainer.innerHTML = "";
+            notes.forEach((note, index) => {
+                notesContainer.innerHTML += `
+                    <div class="note-item">
+                        <p>${index + 1}. ${note}</p>
+                        <button class="delete-button" onclick="deleteNote(${index})">Apagar</button>
+                    </div>
+                `;
+            });
+        }
+
+        window.onload = function() {
+            displayNotes();
+        }
+
+        let lastScrollTop = 0;
+        const nav = document.getElementById('mainNav');
+
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop) {
+                nav.classList.remove('visible');
+            } else {
+                nav.classList.add('visible');
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+    const backToTopButton = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', function () {
+        if (window.scrollY > 300) { // Mostra o botão após rolar 300px para baixo
+            backToTopButton.style.display = 'block';
+        } else {
+            backToTopButton.style.display = 'none';
+        }
+    });
+
+    backToTopButton.addEventListener('click', function () {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+});
+
+    </script>
+
+</body>
+</html>
